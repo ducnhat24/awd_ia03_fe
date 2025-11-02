@@ -19,11 +19,11 @@ const queryClient = new QueryClient()
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />, // Layout chung nếu có
+    element: <App />,
     children: [
       { path: '/', element: <HomePage /> },
       { path: '/login', element: <LoginPage /> },
-      { path: '/signup', element: <SignUpPage /> }, // Trang đăng ký [cite: 31]
+      { path: '/signup', element: <SignUpPage /> },
     ],
   },
 ])

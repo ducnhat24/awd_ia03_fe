@@ -38,11 +38,12 @@ type ApiErrorResponse = {
     message: string
 }
 
+// Use Vite env var; falls back to localhost for dev if not provided
+// cast import.meta to any to avoid TS issues if Vite types are not loaded
+const API_HOST = ((import.meta as any).env?.VITE_API_HOST as string) ?? 'http://localhost:3000'
+
 const registerUser = async (data: UserRegistrationData) => {
-    const { data: response } = await axios.post(
-        'http://localhost:3000/user/register',
-        data,
-    )
+    const { data: response } = await axios.post(`${API_HOST}/user/register`, data)
     return response
 }
 
@@ -75,62 +76,64 @@ export default function SignUpPage() {
     }
 
     return (
-        <div className="flex justify-center pt-10">
-            <Card className="w-full max-w-md">
-                <CardHeader>
-                    <CardTitle>Đăng Ký</CardTitle>
-                    <CardDescription>
-                        Tạo tài khoản mới để bắt đầu.
-                    </CardDescription>
-                </CardHeader>
-                <CardContent>
-                    <Form {...form}>
-                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                            <FormField
-                                control={form.control}
-                                name="email"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Email</FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                placeholder="example@email.com"
-                                                {...field}
-                                                type="email"
-                                            />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="password"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Mật khẩu</FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                placeholder="******"
-                                                {...field}
-                                                type="password"
-                                            />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <Button type="submit" className="w-full" disabled={mutation.isPending}>
-                                {mutation.isPending ? (
-                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                ) : (
-                                    'Đăng Ký'
-                                )}
-                            </Button>
-                        </form>
-                    </Form>
-                </CardContent>
-            </Card>
+        <div className="relative left-1/2 right-1/2 w-screen -translate-x-1/2">
+            <div className="max-w-7xl mx-auto px-4 py-12 flex justify-center">
+                <Card className="w-full max-w-md">
+                    <CardHeader>
+                        <CardTitle>Đăng Ký</CardTitle>
+                        <CardDescription>
+                            Tạo tài khoản mới để bắt đầu.
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <Form {...form}>
+                            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                                <FormField
+                                    control={form.control}
+                                    name="email"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Email</FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    placeholder="example@email.com"
+                                                    {...field}
+                                                    type="email"
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="password"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Mật khẩu</FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    placeholder="******"
+                                                    {...field}
+                                                    type="password"
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <Button type="submit" className="w-full" disabled={mutation.isPending}>
+                                    {mutation.isPending ? (
+                                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                    ) : (
+                                        'Đăng Ký'
+                                    )}
+                                </Button>
+                            </form>
+                        </Form>
+                    </CardContent>
+                </Card>
+            </div>
         </div>
     )
 }
