@@ -38,9 +38,9 @@ type ApiErrorResponse = {
     message: string
 }
 
-// Use Vite env var; falls back to localhost for dev if not provided
-// cast import.meta to any to avoid TS issues if Vite types are not loaded
-const API_HOST = ((import.meta as any).env?.VITE_API_HOST as string) ?? 'http://localhost:3000'
+
+const API_HOST = (import.meta as any).env?.VITE_BACKEND_API_HOST ?? 'http://localhost:3000';
+
 
 const registerUser = async (data: UserRegistrationData) => {
     const { data: response } = await axios.post(`${API_HOST}/user/register`, data)
@@ -122,7 +122,12 @@ export default function SignUpPage() {
                                         </FormItem>
                                     )}
                                 />
-                                <Button type="submit" className="w-full" disabled={mutation.isPending}>
+                                <Button
+                                    type="submit"
+                                    variant="default"
+                                    className="w-full !bg-blue-600 !text-white hover:!bg-blue-700"
+                                    disabled={mutation.isPending}
+                                >
                                     {mutation.isPending ? (
                                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                                     ) : (

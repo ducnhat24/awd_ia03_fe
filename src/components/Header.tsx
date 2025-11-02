@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { Button } from '../components/ui/button'
 
 export default function Header() {
     const [mobileOpen, setMobileOpen] = useState(false)
@@ -13,15 +14,14 @@ export default function Header() {
 
                 {/* Desktop links */}
                 <div className="hidden md:flex items-center md:space-x-4">
-                    <Link to="/login" className="hover:underline">
-                        Login
-                    </Link>
-                    <Link
-                        to="/signup"
-                        className="rounded-md bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90"
-                    >
-                        Sign Up
-                    </Link>
+                    {/* Login: ghost but force blue text so it doesn't follow OS accent colors */}
+                    <Button asChild variant="ghost" size="sm" className="!text-blue-600 hover:!bg-blue-50">
+                        <Link to="/login">Đăng Nhập</Link>
+                    </Button>
+                    {/* Sign up: primary button with fixed blue */}
+                    <Button asChild variant="default" size="sm" className="!bg-blue-600 !text-white hover:!bg-blue-700">
+                        <Link to="/signup">Đăng Ký</Link>
+                    </Button>
                 </div>
 
                 {/* Mobile hamburger */}
@@ -52,20 +52,12 @@ export default function Header() {
             {mobileOpen && (
                 <div className="md:hidden border-t bg-background/50">
                     <div className="container mx-auto px-4 py-3 flex flex-col gap-2">
-                        <Link
-                            to="/login"
-                            onClick={() => setMobileOpen(false)}
-                            className="block w-full text-left hover:underline"
-                        >
-                            Login
-                        </Link>
-                        <Link
-                            to="/signup"
-                            onClick={() => setMobileOpen(false)}
-                            className="block w-full rounded-md bg-primary px-4 py-2 text-center text-primary-foreground hover:bg-primary/90"
-                        >
-                            Sign Up
-                        </Link>
+                        <Button asChild variant="ghost" size="default" className="!text-blue-600 hover:!bg-blue-50 w-full text-left">
+                            <Link to="/login" onClick={() => setMobileOpen(false)}>Đăng Nhập</Link>
+                        </Button>
+                        <Button asChild variant="default" size="default" className="!bg-blue-600 !text-white hover:!bg-blue-700 w-full text-center">
+                            <Link to="/signup" onClick={() => setMobileOpen(false)}>Đăng Ký</Link>
+                        </Button>
                     </div>
                 </div>
             )}
