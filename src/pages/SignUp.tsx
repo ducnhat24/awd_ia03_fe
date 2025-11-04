@@ -43,7 +43,7 @@ const API_HOST = (import.meta as any).env?.VITE_BACKEND_API_HOST ?? 'http://loca
 
 
 const registerUser = async (data: UserRegistrationData) => {
-    const { data: response } = await axios.post(`${API_HOST}/user/register`, data)
+    const { data: response } = await axios.post(`${API_HOST}/auth/register`, data)
     return response
 }
 
